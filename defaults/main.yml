@@ -1,0 +1,17 @@
+---
+# defaults file for is-monitor-grafana
+service_name:  "grafana"
+docker_compose_src: "grafana-compose.yml.j2"
+garafana_conf_path:  "/etc/is/grafana"
+
+grafana_provisioning_path: "/etc/grafana/provisioning"
+grafana_dashes_path: "{{grafana_provisioning_path}}/dashboards"
+grafana_ds_path: "{{grafana_provisioning_path}}/datasources"
+grafana_notifiers_path: "{{grafana_provisioning_path}}/notifiers"
+
+grafana_storage_path: "/var/lib/grafana"
+grafana_plugins_path: "{{grafana_storage_path}}/plugins"
+
+grafana_logs_path: "/var/log/grafana"
+grafana_plugins:
+  - "https://grafana.com/api/plugins/agenty-flowcharting-panel/versions/0.9.1/download"

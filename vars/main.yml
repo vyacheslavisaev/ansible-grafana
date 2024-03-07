@@ -1,0 +1,6 @@
+---
+# vars file for is-monitor-grafana
+service_name:  "grafana"
+docker_compose_src: "grafana-compose.yml.j2"
+service_ports:
+  3000: 3000

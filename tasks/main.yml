@@ -1,0 +1,59 @@
+---
+# tasks file for is-monitor-grafana
+
+- name: Installing dependencies
+  apt: 
+    name: ['unzip']
+    state: present
+    update_cache: yes  
+
+- name: Creating storage
+  file:    
+    path: "{{grafana_storage_path}}"
+    state: "directory"
+    mode: 0777   
+
+- name: Creating logs
+  file:    
+    path: "{{grafana_logs_path}}"
+    state: "directory"
+    mode: 0777
+
+- name: Creating provisioning path
+  file:    
+    path: "{{grafana_provisioning_path}}"
+    state: "directory"
+    mode: 0777
+
+- name: Creating plugins path
+  file:    
+    path: "{{grafana_plugins_path}}"
+    state: "directory"
+    mode: 0777
+
+- name : Installing plugins
+  unarchive:
+    src: "{{item}}"
+    dest: "{{grafana_plugins_path}}"
+    remote_src: True
+  with_items:
+    - "{{grafana_plugins}}"
+
+- name: Copying Grafana configuration
+  template:
+    src: "grafana.ini"
+    dest: "{{garafana_conf_path}}/"
+
+- name: Copying Grafana configuration
+  template:
+    src: "ldap.toml.j2"
+    dest: "{{garafana_conf_path}}/ldap.toml"
+
+- name: Copying dashboards
+  template:
+    src: "welcome.json"
+    dest: "{{grafana_dashes_path}}/"
+
+- name: Deploy Grafana service
+  include_role:
+    name: "vyacheslavisaev.deploy_docker_compose_service"

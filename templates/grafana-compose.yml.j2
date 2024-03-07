@@ -1,0 +1,13 @@
+---
+version: '2'
+
+services:    
+    grafana:
+        image: grafana/grafana:{{docker_grafana_tag}}
+        ports:
+            - "3000:3000"
+        volumes:
+            - {{grafana_storage_path}}:/var/lib/grafana
+            - {{grafana_logs_path}}:/var/log/grafana
+            - {{garafana_conf_path}}:/etc/grafana
+            - {{grafana_provisioning_path}}:/etc/grafana/provisioning
